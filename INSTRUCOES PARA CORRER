@@ -1,0 +1,2 @@
+1º - Instalar nodemon ($- npm install -g nodemon)
+2º - Executar projeto (na pasta onde está o ficheiro index.js, executar $- nodemon index.js)
