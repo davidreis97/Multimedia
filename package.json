@@ -1,0 +1,28 @@
+{
+  "name": "musicandgo",
+  "version": "1.0.0",
+  "description": "Music&Go",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://davidreis97@github.com/davidreis97/Multimedia.git"
+  },
+  "keywords": [
+    "multimedia",
+    "music",
+    "audio",
+    "interactive"
+  ],
+  "author": "Claudia Guedes @ FEUP, David Reis @ FEUP, Marisa Oliveira @ FEUP",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidreis97/Multimedia/issues"
+  },
+  "homepage": "https://github.com/davidreis97/Multimedia#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
