@@ -1,2 +1,4 @@
 1º - Instalar nodemon ($- npm install -g nodemon)
-2º - Executar projeto (na pasta onde está o ficheiro main.js, executar $- nodemon main.js)
+2º - Instalar dependências ($- npm install)
+3º - Executar projeto (na pasta onde está o ficheiro main.js, executar $- nodemon main.js)
+4º - No browser, aceder à página localhost:3000
