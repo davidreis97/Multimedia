@@ -1,20 +1,26 @@
 //CONSTANTS
-const maxBeats = 16;
-const beatsPerMinute = 400;
 const gridelement = document.getElementById("music-grid");
 const nyanbutton = document.getElementById("nyanbutton");
 const shutupbutton = document.getElementById("shutupbutton");
+const playpause = document.getElementById("playpause");
+const morecolumns = document.getElementById("morecolumns");
+const lesscolumns = document.getElementById("lesscolumns");
 
 //MAIN - Runs at start of page
 
-let grid = []; //grid[line][row]
+let grid = []; //grid[line][column]
 let sounds = ['/drums/Snares/Snare 1.wav','/drums/Percs/Perc 8.wav','/drums/Kick/Kick 1.wav','/drums/Bass/Bass 3 (C#).wav']; //Index in this array should be the same as their line
 let currentBeat = 0;
+let playing;
+let maxBeats = 16;
+let beatsPerMinute = 500;
 
 createNewLine();
 createNewLine();
 createNewLine();
 createNewLine();
+
+updatecolumnNum();
 
 var nyanmusic = new Howl({
     src: ['/audio/nyancat.mp3'],
@@ -29,47 +35,108 @@ shutupbutton.onclick = (evt) => {
     nyanmusic.pause();
 }
 
+document.onkeydown = (evt) => {
+    if (evt.key == " "){
+        togglePlaying();
+    }
+}
+
+playpause.onclick = (evt) => {
+    togglePlaying();
+}
+
+morecolumns.onclick = (evt) => {
+    createNewcolumn();
+}
+
+lesscolumns.onclick = (evt) => {
+    deleteLastcolumn();
+}
 //FUNCTIONS
+
+function togglePlaying(){
+    if(playing){
+        pause();
+        playpause.classList.remove("pause");
+        playpause.classList.add("play");
+    }else{
+        play();
+        playpause.classList.remove("play");
+        playpause.classList.add("pause");
+    }
+}
+
+function createNewBeat(line,column){
+    let td = document.createElement("td");
+    let div = document.createElement("div");
+    div.classList.add("square","scale-out-center");
+    td.onclick = () => {
+        toggleSquare(line,column);
+    };
+    div.id = "music-" + line + "-" + column;
+    td.appendChild(div);
+
+    return td;
+}
+
+function updatecolumnNum(){
+    let columnnumb = document.getElementById("columnnumb");
+    columnnumb.innerText = "" + grid[0].length + " columns";
+}
+
+function deleteLastcolumn(){
+    let columnToDelete = grid[0].length - 1;
+    for(let line = 0; line < grid.length; line++){
+        let td = document.getElementById("music-"+line+"-"+columnToDelete).parentNode;
+        td.parentNode.removeChild(td);
+        grid[line].pop();
+    }
+    maxBeats--;
+    updatecolumnNum();
+}
+
+function createNewcolumn(){
+    for(let line = 0; line < grid.length; line++){
+        let tr = document.getElementById("music-"+line);
+        tr.appendChild(createNewBeat(line,maxBeats));
+        grid[line].push(false);
+    }
+    maxBeats++;
+    updatecolumnNum();
+}
 
 function createNewLine(){
     let tr = document.createElement("tr");
+    tr.id = "music-" + grid.length.valueOf();
     let gridLine = new Array(maxBeats);
-    for(let row = 0; row < maxBeats; row++){
-        let td = document.createElement("td");
-        let div = document.createElement("div");
-        div.classList.add("square","scale-out-center");
+    for(let column = 0; column < maxBeats; column++){
         let line = grid.length.valueOf();
-        td.onclick = () => {
-            toggleSquare(line,row);
-        };
-        div.id = "music-" + line + "-" + row;
-        td.appendChild(div);
-        tr.appendChild(td);
-        gridLine[row] = false;
+        tr.appendChild(createNewBeat(line,column));
+        gridLine[column] = false;
     }
     grid.push(gridLine);
     gridelement.appendChild(tr);
 }
 
-function highlightRow(row) {
+function highlightcolumn(column) {
     for(let i = 0; i < grid.length; i++){
-        document.getElementById("music-" + i + "-" + row).parentElement.style.background = "rgba(50, 50, 50, .3)";
+        document.getElementById("music-" + i + "-" + column).parentElement.style.background = "rgba(50, 50, 50, .3)";
     }
 }
 
-highlightRow(0);
+highlightcolumn(0);
 
-function unhighlightRow(row) {
+function unhighlightcolumn(column) {
     for(let i = 0; i < grid.length; i++){
-        document.getElementById("music-" + i + "-" + row).parentElement.style.background = "rgba(50, 50, 50, 0)";
+        document.getElementById("music-" + i + "-" + column).parentElement.style.background = "rgba(50, 50, 50, 0)";
     }
 }
 
-function toggleSquare(line, row){
-    let div = document.getElementById("music-" + line + "-" + row);
-    grid[line][row] = !grid[line][row];
+function toggleSquare(line, column){
+    let div = document.getElementById("music-" + line + "-" + column);
+    grid[line][column] = !grid[line][column];
 
-    if(grid[line][row]){
+    if(grid[line][column]){
         div.classList.remove("scale-out-center");
         div.classList.add("scale-in-center");
     }else{
@@ -78,8 +145,25 @@ function toggleSquare(line, row){
     }
 }
 
+function backTo0(){
+    unhighlightcolumn(currentBeat);
+    currentBeat = 0;
+    highlightcolumn(currentBeat);
+}
+
+function play(){
+    console.log("Playing");
+    playing = setInterval(mainLoop,1000/(beatsPerMinute/60));
+}
+
+function pause(){
+    console.log("Pausing");
+    clearInterval(playing);
+    playing = null;
+}
+
 function mainLoop(){
-    unhighlightRow(currentBeat);
+    unhighlightcolumn(currentBeat);
     
     currentBeat = (currentBeat + 1) % maxBeats;
 
@@ -92,6 +176,5 @@ function mainLoop(){
         }
     }
 
-    highlightRow(currentBeat);
+    highlightcolumn(currentBeat);
 }
-setInterval(mainLoop,1000/(beatsPerMinute/60));

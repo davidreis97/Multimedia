@@ -3,13 +3,30 @@
         <button type="button" class="btn btn-primary" id="nyanbutton" >Click for Sound!</button>
         <button type="button" class="btn btn-danger" id="shutupbutton" >Shut up!</button>
     </div>
-    <div class="text-center">
+    <div>
         <p>Como seria de esperar, as cores que eu escolhi estao horriveis, pls arranjem melhor, é so mudar no index.css, este site é mt fixe para estas cenas https://cssgradient.io/ </p>
-        <table class="table table-bordered" style="width:1px">
-            <tbody id="music-grid">
-                <!-- Filled automatically with javascript in index.js -->
-            </tbody>
-        </table>
+        <div style="display: inline-block;width:100%;">
+            <div class="controls">
+                <div class="playpause play" id="playpause">
+                    <input type="checkbox" value="None" id="playpause" name="check" />
+                    <label for="playpause"></label>
+                </div>
+
+                <div id="columncontroller" style="display: flex; margin-left:1em">
+                    <span class="oi oi-minus" style="padding-top:5px;padding-right:4px" id="lesscolumns"></span>
+                    <p id="columnnumb" style="margin:0;padding:0;">xx columns</p>
+                    <span class="oi oi-plus" style="padding-top:5px;padding-left:4px" id="morecolumns"></span>
+                </div>
+            </div>
+            <div style="width:100%;height:0"></div>
+            <div id="music-grid-container" class="table-container">
+                <table class="table table-bordered" style="width:1px;margin:auto">
+                    <tbody id="music-grid">
+                        <!-- Filled automatically with javascript in index.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
