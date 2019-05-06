@@ -3,10 +3,10 @@
 body{ margin:0; }
 
 ul {
-    height:18.875em; 
-    width:34em;
+    height:21em; 
+    /* width:34em; */
     margin:5em auto; 
-    padding:3em 0 0 3em; 
+    padding:3em 0 0 4em; 
     position:relative; 
     border:1px solid #160801; 
     box-shadow:0 0 50px rgba(0,0,0,0.5) inset, 0 1px rgba(212,152,125,0.2) inset,0 5px 15px rgba(0,0,0,0.5); 
