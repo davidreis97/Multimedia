@@ -19,6 +19,13 @@
             <input type="number" value="500" id="bpmvalue" style="width:3em;text-align:center" />
             <p title="Beats Per Minute" style="margin: 0 0 0 0.3em;padding:0;">bpm</p>
         </div>
+
+        <div class="separator"></div>
+
+        <button id="clearGridElem" type="button" class="btn btn-danger btn-sm">
+            <span class="oi oi-trash"></span>
+            Clear Grid
+        </button>
     </div>
     <div style="text-align: center">
         <div id="music-grid-container" class="table-container">
@@ -30,8 +37,13 @@
         </div>
     </div>
     <div class="newInstrumentContainer">
-        <button data-toggle="modal" data-target="#newInstrumentModal" type="button" class="btn btn-primary">+ New
-            Instrument</button>
+        <button data-toggle="modal" data-target="#newInstrumentModal" type="button" class="btn btn-primary">
+            <strong>+</strong> New Instrument
+        </button>
+        <button id="deleteLastInstrument" type="button" style="margin-left: 0.5em" class="btn btn-danger">
+            <span class="oi oi-trash"></span>
+            Delete Last Instrument
+        </button>
     </div>
 </div>
 

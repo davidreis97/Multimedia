@@ -8,6 +8,8 @@ const addInstrumentFinal = document.getElementById("addInstrumentFinal");
 const newInstTitle = document.getElementById("newInstTitle");
 const newInstURL = document.getElementById("newInstURL");
 const formatSelect = document.getElementById("formatSelect");
+const deleteLastInstrument = document.getElementById("deleteLastInstrument");
+const clearGridElem = document.getElementById("clearGridElem");
 
 //MAIN - Runs at start of page
 
@@ -67,6 +69,14 @@ addInstrumentFinal.onclick = (evt) => {
     createNewLine(newInstTitle.value,newInstURL.value,formatSelect.value);
 }
 
+deleteLastInstrument.onclick = (evt) => {
+    deleteLastLine();
+}
+
+clearGridElem.onclick = (evt) => {
+    clearGrid();
+}
+
 addEventListenersToTableOfMisery();
 
 //FUNCTIONS
@@ -122,6 +132,12 @@ function createNewBeat(line, column) {
 function updatecolumnNum() {
     let columnnumb = document.getElementById("columnnumb");
     columnnumb.innerText = "" + grid[0].length + " columns";
+}
+
+function deleteLastLine(){
+    let lastLine = document.getElementById("music-" + (grid.length - 1));
+    lastLine.parentNode.removeChild(lastLine);
+    grid.pop();
 }
 
 function deleteLastcolumn() {
@@ -285,6 +301,16 @@ function unhighlightcolumn(column) {
     }
 }
 
+function clearGrid(){
+    for(let line = 0; line < grid.length; line++){
+        for(let column = 0; column < grid[line].length; column++){            
+            if(grid[line][column]){
+                toggleSquare(line,column);
+            }
+        }
+    }
+}
+
 function toggleSquare(line, column) {
     let div = document.getElementById("music-" + line + "-" + column);
     grid[line][column] = !grid[line][column];
@@ -334,7 +360,7 @@ function getInstrumentFromServer(url, autoplay = false, format = "wav") {
             autoplay: autoplay,
             loop: false,
             volume: 0.5,
-            format: format
+            format: format,
         });
     }else{
         if (autoplay){
