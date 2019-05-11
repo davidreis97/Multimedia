@@ -2,7 +2,7 @@
 
 body{ margin:0; }
 
-ul {
+.set {
     height:21em; 
     /* width:34em; */
     margin:5em auto; 
@@ -14,7 +14,7 @@ ul {
 
 li { margin:0; padding:0; list-style:none; position:relative; float:left; }
 
-ul .white {
+.set .white {
 	height:16em; width:4em; z-index:1;
 	border-left:1px solid #bbb;
 	border-bottom:1px solid #bbb;
@@ -24,7 +24,7 @@ ul .white {
     background: #fff;
 }
 
-ul .white:active {
+.set .white:active {
 	border-top:1px solid #777;
 	border-left:1px solid #999;
 	border-bottom:1px solid #999;
@@ -46,5 +46,5 @@ ul .white:active {
 }
 
 .a,.g,.d,.e, .b { margin:0 0 0 -1em;  }
-ul li:first-child { border-radius:5px 0 5px 5px; }
-ul li:last-child { border-radius:0 5px 5px 5px; }
+.set li:first-child { border-radius:5px 0 5px 5px; }
+.set li:last-child { border-radius:0 5px 5px 5px; }

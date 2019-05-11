@@ -1,35 +1,249 @@
 <div class="container-fluid">
-    <div class="test-buttons">
-        <button type="button" class="btn btn-primary" id="nyanbutton" >Click for Sound!</button>
-        <button type="button" class="btn btn-danger" id="shutupbutton" >Shut up!</button>
-    </div>
-    <div>
-        <p>Como seria de esperar, as cores que eu escolhi estao horriveis, pls arranjem melhor, é so mudar no index.css, este site é mt fixe para estas cenas https://cssgradient.io/ </p>
-        <div style="display: inline-block;width:100%;">
-            <div class="controls">
-                <div class="playpause play" id="playpause">
-                    <input type="checkbox" value="None" id="playpause" name="check" />
-                    <label for="playpause"></label>
-                </div>
+    <div class="controls">
+        <div class="playpause play" id="playpause">
+            <input type="checkbox" value="None" id="playpause" name="check" />
+            <label for="playpause"></label>
+        </div>
 
-                <div id="columncontroller" style="display: flex; margin-left:1em">
-                    <span class="oi oi-minus" style="padding-top:5px;padding-right:4px" id="lesscolumns"></span>
-                    <p id="columnnumb" style="margin:0;padding:0;">xx columns</p>
-                    <span class="oi oi-plus" style="padding-top:5px;padding-left:4px" id="morecolumns"></span>
+        <div class="separator"></div>
+
+        <div id="columncontroller" style="display: flex;">
+            <span class="oi oi-minus" style="padding-top:5px;padding-right:4px" id="lesscolumns"></span>
+            <p id="columnnumb" style="margin:0;padding:0;">xx columns</p>
+            <span class="oi oi-plus" style="padding-top:5px;padding-left:4px" id="morecolumns"></span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div id="bpmcontroller" style="display: flex;">
+            <input type="number" value="500" id="bpmvalue" style="width:3em;text-align:center" />
+            <p title="Beats Per Minute" style="margin: 0 0 0 0.3em;padding:0;">bpm</p>
+        </div>
+    </div>
+    <div style="text-align: center">
+        <div id="music-grid-container" class="table-container">
+            <table class="table table-bordered" style="width:1px;margin:auto">
+                <tbody id="music-grid">
+                    <!-- Filled automatically with javascript in index.js -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="newInstrumentContainer">
+        <button data-toggle="modal" data-target="#newInstrumentModal" type="button" class="btn btn-primary">+ New
+            Instrument</button>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div>
+        <div style="width:100%;height:0">
+            <div class="nowplaying"></div>
+            <div class="keys">
+                <ul class="set">
+                    <li data-key="65" class="white key"></li>
+                    <li data-key="87" class="black cs key sharp"></li>
+                    <li data-key="83" class="white d key"></li>
+                    <li data-key="69" class="black ds key sharp"></li>
+                    <li data-key="68" class="white e key"></li>
+                    <li data-key="70" class="white f key"></li>
+                    <li data-key="84" class="black fs key sharp"></li>
+                    <li data-key="71" class="white g key"></li>
+                    <li data-key="89" class="black gs key sharp"></li>
+                    <li data-key="72" class="white a key"></li>
+                    <li data-key="85" class="black as key sharp"></li>
+                    <li data-key="74" class="white b key"></li>
+                    <li data-key="75" class="white c key"></li>
+                    <li data-key="79" class="black cs key sharp"></li>
+                    <li data-key="76" class="white d key"></li>
+                    <li data-key="80" class="black ds key sharp"></li>
+                    <li data-key="186" class="white e key"></li>
+                    <li data-key="85" class="white f key"></li>
+                    <li data-key="85" class="black fs key sharp"></li>
+                    <li data-key="85" class="white g key"></li>
+                    <li data-key="85" class="black gs key sharp"></li>
+                    <li data-key="85" class="white a key"></li>
+                    <li data-key="85" class="black as key sharp"></li>
+                    <li data-key="85" class="white b key"></li>
+                    <li data-key="85" class="white c key"></li>
+                    <li class="black cs key sharp"></li>
+                    <li class="white d key"></li>
+                    <li class="black ds key sharp"></li>
+                    <li class="white e key"></li>
+                    <li class="white f key"></li>
+                    <li class="black fs key sharp"></li>
+                    <li class="white g key"></li>
+                    <li class="black gs key sharp"></li>
+                    <li class="white a key"></li>
+                </ul>
+            </div>
+        </div>
+        <audio data-key="65" src="http://carolinegabriel.com/demo/js-keyboard/sounds/040.wav"></audio>
+        <audio data-key="87" src="http://carolinegabriel.com/demo/js-keyboard/sounds/041.wav"></audio>
+        <audio data-key="83" src="http://carolinegabriel.com/demo/js-keyboard/sounds/042.wav"></audio>
+        <audio data-key="69" src="http://carolinegabriel.com/demo/js-keyboard/sounds/043.wav"></audio>
+        <audio data-key="68" src="http://carolinegabriel.com/demo/js-keyboard/sounds/044.wav"></audio>
+        <audio data-key="70" src="http://carolinegabriel.com/demo/js-keyboard/sounds/045.wav"></audio>
+        <audio data-key="84" src="http://carolinegabriel.com/demo/js-keyboard/sounds/046.wav"></audio>
+        <audio data-key="71" src="http://carolinegabriel.com/demo/js-keyboard/sounds/047.wav"></audio>
+        <audio data-key="89" src="http://carolinegabriel.com/demo/js-keyboard/sounds/048.wav"></audio>
+        <audio data-key="72" src="http://carolinegabriel.com/demo/js-keyboard/sounds/049.wav"></audio>
+        <audio data-key="85" src="http://carolinegabriel.com/demo/js-keyboard/sounds/050.wav"></audio>
+        <audio data-key="74" src="http://carolinegabriel.com/demo/js-keyboard/sounds/051.wav"></audio>
+        <audio data-key="75" src="http://carolinegabriel.com/demo/js-keyboard/sounds/052.wav"></audio>
+        <audio data-key="79" src="http://carolinegabriel.com/demo/js-keyboard/sounds/053.wav"></audio>
+        <audio data-key="76" src="http://carolinegabriel.com/demo/js-keyboard/sounds/054.wav"></audio>
+        <audio data-key="80" src="http://carolinegabriel.com/demo/js-keyboard/sounds/055.wav"></audio>
+        <audio data-key="186" src="http://carolinegabriel.com/demo/js-keyboard/sounds/056.wav"></audio>
+    </div>
+</div>
+
+<div class="modal fade" id="newInstrumentModal" tabindex="-1" role="dialog" aria-labelledby="newInstrumentModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="newInstrumentModalTitle">Add a new Instrument</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Choose from our library or link your own!</h5>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                    aria-expanded="false" aria-controls="collapseExample" style="margin-bottom: 0.5em">
+                    Toggle Library
+                </a>
+                <div class="collapse" id="collapseExample" style="overflow: scroll" style="margin-bottom: 0.5em">
+                    <table class="table" style="overflow: scroll">
+                        <thead style="overflow: scroll">
+                            <tr style="overflow: scroll">
+                                <th scope="col">808s</th>
+                                <th scope="col">Bass</th>
+                                <th scope="col">Chants</th>
+                                <th scope="col">Claps</th>
+                                <th scope="col">Cymbals</th>
+                                <th scope="col">FX</th>
+                                <th scope="col">Hats</th>
+                                <th scope="col">Kick</th>
+                                <th scope="col">OpenHats</th>
+                                <th scope="col">Percs</th>
+                                <th scope="col">Snares</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableOfMisery">
+                            <tr>
+                                <td class="cellOfMisery" title="808 1 (C)" value="/inst?id=/drums/808s/808 1 (C).wav">1 (C)</td>
+                                <td class="cellOfMisery" title="Bass 1" value="/inst?id=/drums/Bass/Bass 1.wav">1</td>
+                                <td class="cellOfMisery" title="Chant 1" value="/inst?id=/drums/Chants/Chant 1.wav">1</td>
+                                <td class="cellOfMisery" title="Clap 1" value="/inst?id=/drums/Claps/Clap 1.wav">1</td>
+                                <td class="cellOfMisery" title="Cymbal 1" value="/inst?id=/drums/Cymbals/Crash 1.wav">1</td>
+                                <td class="cellOfMisery" title="FX 1" value="/inst?id=/drums/FX/FX 1.wav">1</td>
+                                <td class="cellOfMisery" title="Hat 1" value="/inst?id=/drums/Hats/Hat 1.wav">1</td>
+                                <td class="cellOfMisery" title="Kick 1" value="/inst?id=/drums/Kick/Kick 1.wav">1</td>
+                                <td class="cellOfMisery" title="Open Hat 1" value="/inst?id=/drums/OpenHats/Open Hat 1.wav">1</td>
+                                <td class="cellOfMisery" title="Perc 1" value="/inst?id=/drums/Percs/Perc 1.wav">1</td>
+                                <td class="cellOfMisery" title="Snare 1" value="/inst?id=/drums/Snares/Snare 1.wav">1</td>
+                            </tr>
+                            <tr>
+                                <td class="cellOfMisery" title="808 2 (C)" value="/inst?id=/drums/808s/808 2 (C).wav">2 (C)</td>
+                                <td class="cellOfMisery" title="Bass 2" value="/inst?id=/drums/Bass/Bass 2.wav">2</td>
+                                <td class="cellOfMisery" title="Chant 2" value="/inst?id=/drums/Chants/Chant 2.wav">2</td>
+                                <td class="cellOfMisery" title="Clap 2" value="/inst?id=/drums/Claps/Clap 2.wav">2</td>
+                                <td class="cellOfMisery" title="Cymbal 2" value="/inst?id=/drums/Cymbals/Crash 1.wav">2</td>
+                                <td class="cellOfMisery" title="FX 2" value="/inst?id=/drums/FX/FX 2.wav">2</td>
+                                <td class="cellOfMisery" title="Hat 2" value="/inst?id=/drums/Hats/Hat 2.wav">2</td>
+                                <td class="cellOfMisery" title="Kick 2" value="/inst?id=/drums/Kick/Kick 2.wav">2</td>
+                                <td class="cellOfMisery" title="Open Hat 2" value="/inst?id=/drums/OpenHats/Open Hat 2.wav">2</td>
+                                <td class="cellOfMisery" title="Perc 2" value="/inst?id=/drums/Percs/Perc 2.wav">2</td>
+                                <td class="cellOfMisery" title="Snare 2" value="/inst?id=/drums/Snares/Snare 2.wav">2</td>
+                            </tr>
+                            <tr>
+                                <td class="cellOfMisery" title="808 3 (C)" value="/inst?id=/drums/808s/808 3 (C).wav">3 (C)</td>
+                                <td class="cellOfMisery" title="Bass 3" value="/inst?id=/drums/Bass/Bass 3.wav">3</td>
+                                <td class="cellOfMisery" title="Chant 3" value="/inst?id=/drums/Chants/Chant 3.wav">3</td>
+                                <td class="cellOfMisery" title="Clap 3" value="/inst?id=/drums/Claps/Clap 3.wav">3</td>
+                                <td class="cellOfMisery" title="Cymbal 3" value="/inst?id=/drums/Cymbals/Crash 1.wav">3</td>
+                                <td class="cellOfMisery" title="FX 3" value="/inst?id=/drums/FX/FX 3.wav">3</td>
+                                <td class="cellOfMisery" title="Hat 3" value="/inst?id=/drums/Hats/Hat 3.wav">3</td>
+                                <td class="cellOfMisery" title="Kick 3" value="/inst?id=/drums/Kick/Kick 3.wav">3</td>
+                                <td class="cellOfMisery" title="Open Hat 3" value="/inst?id=/drums/OpenHats/Open Hat 3.wav">3</td>
+                                <td class="cellOfMisery" title="Perc 3" value="/inst?id=/drums/Percs/Perc 3.wav">3</td>
+                                <td class="cellOfMisery" title="Snare 3" value="/inst?id=/drums/Snares/Snare 3.wav">3</td>
+                            </tr>
+                            <tr>
+                                <td class="cellOfMisery" title="808 4 (C)" value="/inst?id=/drums/808s/808 4 (C).wav">4 (C)</td>
+                                <td class="cellOfMisery" title="Bass 4" value="/inst?id=/drums/Bass/Bass 4.wav">4</td>
+                                <td class="cellOfMisery" title="Chant 4" value="/inst?id=/drums/Chants/Chant 4.wav">4</td>
+                                <td class="cellOfMisery" title="Clap 4" value="/inst?id=/drums/Claps/Clap 4.wav">4</td>
+                                <td class="cellOfMisery" title="Cymbal 4" value="/inst?id=/drums/Cymbals/Crash 1.wav">4</td>
+                                <td class="cellOfMisery" title="FX 4" value="/inst?id=/drums/FX/FX 4.wav">4</td>
+                                <td class="cellOfMisery" title="Hat 4" value="/inst?id=/drums/Hats/Hat 4.wav">4</td>
+                                <td class="cellOfMisery" title="Kick 4" value="/inst?id=/drums/Kick/Kick 4.wav">4</td>
+                                <td class="cellOfMisery" title="Open Hat 4" value="/inst?id=/drums/OpenHats/Open Hat 4.wav">4</td>
+                                <td class="cellOfMisery" title="Perc 4" value="/inst?id=/drums/Percs/Perc 4.wav">4</td>
+                                <td class="cellOfMisery" title="Snare 4" value="/inst?id=/drums/Snares/Snare 4.wav">4</td>
+                            </tr>
+                            <tr>
+                                <td class="cellOfMisery" title="808 5 (D)" value="/inst?id=/drums/808s/808 5 (D).wav">5 (D)</td>
+                                <td class="cellOfMisery" title="Bass 5" value="/inst?id=/drums/Bass/Bass 5.wav">5</td>
+                                <td class="cellOfMisery" title="Chant 5" value="/inst?id=/drums/Chants/Chant 5.wav">5</td>
+                                <td class="cellOfMisery" title="Clap 5" value="/inst?id=/drums/Claps/Clap 5.wav">5</td>
+                                <td class="cellOfMisery" title="Cymbal 5" value="/inst?id=/drums/Cymbals/Crash 1.wav">5</td>
+                                <td class="cellOfMisery" title="FX 5" value="/inst?id=/drums/FX/FX 5.wav">5</td>
+                                <td class="cellOfMisery" title="Hat 5" value="/inst?id=/drums/Hats/Hat 5.wav">5</td>
+                                <td class="cellOfMisery" title="Kick 5" value="/inst?id=/drums/Kick/Kick 5.wav">5</td>
+                                <td class="cellOfMisery" title="Open Hat 5" value="/inst?id=/drums/OpenHats/Open Hat 5.wav">5</td>
+                                <td class="cellOfMisery" title="Perc 5" value="/inst?id=/drums/Percs/Perc 5.wav">5</td>
+                                <td class="cellOfMisery" title="Snare 5" value="/inst?id=/drums/Snares/Snare 5.wav">5</td>
+                            </tr>
+                            <tr>
+                                <td class="cellOfMisery" title="808 6 (G#)" value="/inst?id=/drums/808s/808 6 (GS).wav">6 (G#)</td>
+                                <td class="cellOfMisery" title="Bass 6" value="/inst?id=/drums/Bass/Bass 6.wav">6</td>
+                                <td class="cellOfMisery" title="Chant 6" value="/inst?id=/drums/Chants/Chant 6.wav">6</td>
+                                <td class="cellOfMisery" title="Clap 6" value="/inst?id=/drums/Claps/Clap 6.wav">6</td>
+                                <td class="cellOfMisery" title="Ride" value="/inst?id=/drums/Cymbals/Ride.wav">6</td>
+                                <td class="cellOfMisery" title="FX 6" value="/inst?id=/drums/FX/FX 6.wav">6</td>
+                                <td class="cellOfMisery" title="Hat 6" value="/inst?id=/drums/Hats/Hat 6.wav">6</td>
+                                <td class="cellOfMisery" title="Kick 6" value="/inst?id=/drums/Kick/Kick 6.wav">6</td>
+                                <td class="cellOfMisery" title="Open Hat 6" value="/inst?id=/drums/OpenHats/Open Hat 6.wav">6</td>
+                                <td class="cellOfMisery" title="Perc 6" value="/inst?id=/drums/Percs/Perc 6.wav">6</td>
+                                <td class="cellOfMisery" title="Snare 6" value="/inst?id=/drums/Snares/Snare 6.wav">6</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <input type="text" class="form-control" id="newInstTitle" placeholder="Title">
+                <div class="input-group-prepend">
+                    <input type="text" class="form-control" id="newInstURL" placeholder="URL">
+                    <select class="custom-select" id="formatSelect" style="width:8em">
+                        <option value="wav">wav</option>
+                        <option value="mp3">mp3</option>
+                        <option value="mp4">mp4</option>
+                        <option value="webm">webm</option>
+                        <option value="opus">opus</option>
+                        <option value="ogg">ogg</option>
+                        <option value="oga">oga</option>
+                        <option value="aac">aac</option>
+                        <option value="caf">caf</option>
+                        <option value="m4a">m4a</option>
+                        <option value="weba">weba</option>
+                        <option value="dolby">dolby</option>
+                        <option value="flac">flac</option>
+                    </select>
                 </div>
             </div>
-            <div style="width:100%;height:0"></div>
-            <div id="music-grid-container" class="table-container">
-                <table class="table table-bordered" style="width:1px;margin:auto">
-                    <tbody id="music-grid">
-                        <!-- Filled automatically with javascript in index.js -->
-                    </tbody>
-                </table>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="addInstrumentFinal" data-dismiss="modal">Add Instrument</button>
             </div>
         </div>
     </div>
 </div>
 
+
+<link rel="stylesheet" href="/style/piano.css">
+<script src="/js/piano.js"></script>
 
 <link rel="stylesheet" href="/style/index.css">
 <script src="/js/index.js"></script>

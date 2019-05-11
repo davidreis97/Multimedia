@@ -1,12 +1,23 @@
-.test-buttons button {
-    margin: 4em;
-}
-
 .square{
     height: 50px;
     width: 50px;
     background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(228,45,253,1) 100%);
     border-radius: 50%;
+}
+
+#bpmvalue::-webkit-outer-spin-button,
+#bpmvalue::-webkit-inner-spin-button {
+    display: none;
+}
+
+.container-fluid{
+    overflow: hidden;
+    padding: 2em;
+}
+
+.cellOfMisery{
+    cursor: pointer;
+    text-align: center;
 }
 
 .table-container {
@@ -20,7 +31,6 @@
 }
 
 #music-grid-container {
-    width:100%;
     overflow:scroll;
 }
 
@@ -53,6 +63,13 @@
     margin: 0;
 }
 
+.separator {
+    height: 28px;
+    width: 1.2px;
+    background: rgba(0, 0, 0, 0.4);
+    margin: 0 0.5em 0 0.5em;
+}
+
 .controls{
     display: inline-flex;
     background:rgba(213, 222, 235, 0.8);
@@ -62,6 +79,19 @@
     border-color: rgba(213, 222, 235, 0.8);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    margin-left: 20px;
+    padding: 0.5em;
+}
+
+.newInstrumentContainer{
+    display: inline-flex;
+    background:rgba(213, 222, 235, 0.8);
+    background-clip:  padding-box;
+    border-width: 3px 3px 0px 3px;
+    border-style: solid;
+    border-color: rgba(213, 222, 235, 0.8);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     margin-left: 20px;
     padding: 0.5em;
 }
