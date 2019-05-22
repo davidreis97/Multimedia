@@ -44,11 +44,31 @@
             <span class="oi oi-trash"></span>
             Delete Last Instrument
         </button>
-        <button data-toggle="modal" data-target="#configureMIDIInputs" style="margin-left: 0.5em" type="button" class="btn btn-warning">
-            <strong>+</strong> Configure MIDI Input
+        <button data-toggle="modal" data-target="#configureMIDIInputs" style="margin-left: 0.5em" type="button"
+            class="btn btn-warning">
+            <span class="oi oi-musical-note"></span>
+            Configure MIDI Input
         </button>
     </div>
+
+    <div style="display: flex;">
+        <span for="qualityPresets">Wave Render Quality</span>
+        <select class="custom-select" id="qualityPresets" style="width: 10em">
+            <option value="5">Highest</option>
+            <option value="4">High</option>
+            <option selected value="3">Medium</option>
+            <option value="2">Low</option>
+            <option value="1">Very Low</option>
+            <option value="0">Off</option>
+        </select>
+    </div>
 </div>
+
+<div id="wave"></div>
+
+<div id="afterCanvas" style="width: 100%; height: 100%"></div>
+
+<!-- MODALS -->
 
 <div class="modal fade" id="configureMIDIInputs" tabindex="-1" role="dialog" aria-labelledby="configureMIDIInputsTitle"
     aria-hidden="true">
@@ -115,82 +135,111 @@
                         </thead>
                         <tbody id="tableOfMisery">
                             <tr>
-                                <td class="cellOfMisery" title="808 1 (C)" value="/inst?id=/drums/808s/808 1 (C).wav">1 (C)</td>
+                                <td class="cellOfMisery" title="808 1 (C)" value="/inst?id=/drums/808s/808 1 (C).wav">1
+                                    (C)</td>
                                 <td class="cellOfMisery" title="Bass 1" value="/inst?id=/drums/Bass/Bass 1.wav">1</td>
-                                <td class="cellOfMisery" title="Chant 1" value="/inst?id=/drums/Chants/Chant 1.wav">1</td>
+                                <td class="cellOfMisery" title="Chant 1" value="/inst?id=/drums/Chants/Chant 1.wav">1
+                                </td>
                                 <td class="cellOfMisery" title="Clap 1" value="/inst?id=/drums/Claps/Clap 1.wav">1</td>
-                                <td class="cellOfMisery" title="Cymbal 1" value="/inst?id=/drums/Cymbals/Crash 1.wav">1</td>
+                                <td class="cellOfMisery" title="Cymbal 1" value="/inst?id=/drums/Cymbals/Crash 1.wav">1
+                                </td>
                                 <td class="cellOfMisery" title="FX 1" value="/inst?id=/drums/FX/FX 1.wav">1</td>
                                 <td class="cellOfMisery" title="Hat 1" value="/inst?id=/drums/Hats/Hat 1.wav">1</td>
                                 <td class="cellOfMisery" title="Kick 1" value="/inst?id=/drums/Kick/Kick 1.wav">1</td>
-                                <td class="cellOfMisery" title="Open Hat 1" value="/inst?id=/drums/OpenHats/Open Hat 1.wav">1</td>
+                                <td class="cellOfMisery" title="Open Hat 1"
+                                    value="/inst?id=/drums/OpenHats/Open Hat 1.wav">1</td>
                                 <td class="cellOfMisery" title="Perc 1" value="/inst?id=/drums/Percs/Perc 1.wav">1</td>
-                                <td class="cellOfMisery" title="Snare 1" value="/inst?id=/drums/Snares/Snare 1.wav">1</td>
+                                <td class="cellOfMisery" title="Snare 1" value="/inst?id=/drums/Snares/Snare 1.wav">1
+                                </td>
                             </tr>
                             <tr>
-                                <td class="cellOfMisery" title="808 2 (C)" value="/inst?id=/drums/808s/808 2 (C).wav">2 (C)</td>
+                                <td class="cellOfMisery" title="808 2 (C)" value="/inst?id=/drums/808s/808 2 (C).wav">2
+                                    (C)</td>
                                 <td class="cellOfMisery" title="Bass 2" value="/inst?id=/drums/Bass/Bass 2.wav">2</td>
-                                <td class="cellOfMisery" title="Chant 2" value="/inst?id=/drums/Chants/Chant 2.wav">2</td>
+                                <td class="cellOfMisery" title="Chant 2" value="/inst?id=/drums/Chants/Chant 2.wav">2
+                                </td>
                                 <td class="cellOfMisery" title="Clap 2" value="/inst?id=/drums/Claps/Clap 2.wav">2</td>
-                                <td class="cellOfMisery" title="Cymbal 2" value="/inst?id=/drums/Cymbals/Crash 1.wav">2</td>
+                                <td class="cellOfMisery" title="Cymbal 2" value="/inst?id=/drums/Cymbals/Crash 1.wav">2
+                                </td>
                                 <td class="cellOfMisery" title="FX 2" value="/inst?id=/drums/FX/FX 2.wav">2</td>
                                 <td class="cellOfMisery" title="Hat 2" value="/inst?id=/drums/Hats/Hat 2.wav">2</td>
                                 <td class="cellOfMisery" title="Kick 2" value="/inst?id=/drums/Kick/Kick 2.wav">2</td>
-                                <td class="cellOfMisery" title="Open Hat 2" value="/inst?id=/drums/OpenHats/Open Hat 2.wav">2</td>
+                                <td class="cellOfMisery" title="Open Hat 2"
+                                    value="/inst?id=/drums/OpenHats/Open Hat 2.wav">2</td>
                                 <td class="cellOfMisery" title="Perc 2" value="/inst?id=/drums/Percs/Perc 2.wav">2</td>
-                                <td class="cellOfMisery" title="Snare 2" value="/inst?id=/drums/Snares/Snare 2.wav">2</td>
+                                <td class="cellOfMisery" title="Snare 2" value="/inst?id=/drums/Snares/Snare 2.wav">2
+                                </td>
                             </tr>
                             <tr>
-                                <td class="cellOfMisery" title="808 3 (C)" value="/inst?id=/drums/808s/808 3 (C).wav">3 (C)</td>
+                                <td class="cellOfMisery" title="808 3 (C)" value="/inst?id=/drums/808s/808 3 (C).wav">3
+                                    (C)</td>
                                 <td class="cellOfMisery" title="Bass 3" value="/inst?id=/drums/Bass/Bass 3.wav">3</td>
-                                <td class="cellOfMisery" title="Chant 3" value="/inst?id=/drums/Chants/Chant 3.wav">3</td>
+                                <td class="cellOfMisery" title="Chant 3" value="/inst?id=/drums/Chants/Chant 3.wav">3
+                                </td>
                                 <td class="cellOfMisery" title="Clap 3" value="/inst?id=/drums/Claps/Clap 3.wav">3</td>
-                                <td class="cellOfMisery" title="Cymbal 3" value="/inst?id=/drums/Cymbals/Crash 1.wav">3</td>
+                                <td class="cellOfMisery" title="Cymbal 3" value="/inst?id=/drums/Cymbals/Crash 1.wav">3
+                                </td>
                                 <td class="cellOfMisery" title="FX 3" value="/inst?id=/drums/FX/FX 3.wav">3</td>
                                 <td class="cellOfMisery" title="Hat 3" value="/inst?id=/drums/Hats/Hat 3.wav">3</td>
                                 <td class="cellOfMisery" title="Kick 3" value="/inst?id=/drums/Kick/Kick 3.wav">3</td>
-                                <td class="cellOfMisery" title="Open Hat 3" value="/inst?id=/drums/OpenHats/Open Hat 3.wav">3</td>
+                                <td class="cellOfMisery" title="Open Hat 3"
+                                    value="/inst?id=/drums/OpenHats/Open Hat 3.wav">3</td>
                                 <td class="cellOfMisery" title="Perc 3" value="/inst?id=/drums/Percs/Perc 3.wav">3</td>
-                                <td class="cellOfMisery" title="Snare 3" value="/inst?id=/drums/Snares/Snare 3.wav">3</td>
+                                <td class="cellOfMisery" title="Snare 3" value="/inst?id=/drums/Snares/Snare 3.wav">3
+                                </td>
                             </tr>
                             <tr>
-                                <td class="cellOfMisery" title="808 4 (C)" value="/inst?id=/drums/808s/808 4 (C).wav">4 (C)</td>
+                                <td class="cellOfMisery" title="808 4 (C)" value="/inst?id=/drums/808s/808 4 (C).wav">4
+                                    (C)</td>
                                 <td class="cellOfMisery" title="Bass 4" value="/inst?id=/drums/Bass/Bass 4.wav">4</td>
-                                <td class="cellOfMisery" title="Chant 4" value="/inst?id=/drums/Chants/Chant 4.wav">4</td>
+                                <td class="cellOfMisery" title="Chant 4" value="/inst?id=/drums/Chants/Chant 4.wav">4
+                                </td>
                                 <td class="cellOfMisery" title="Clap 4" value="/inst?id=/drums/Claps/Clap 4.wav">4</td>
-                                <td class="cellOfMisery" title="Cymbal 4" value="/inst?id=/drums/Cymbals/Crash 1.wav">4</td>
+                                <td class="cellOfMisery" title="Cymbal 4" value="/inst?id=/drums/Cymbals/Crash 1.wav">4
+                                </td>
                                 <td class="cellOfMisery" title="FX 4" value="/inst?id=/drums/FX/FX 4.wav">4</td>
                                 <td class="cellOfMisery" title="Hat 4" value="/inst?id=/drums/Hats/Hat 4.wav">4</td>
                                 <td class="cellOfMisery" title="Kick 4" value="/inst?id=/drums/Kick/Kick 4.wav">4</td>
-                                <td class="cellOfMisery" title="Open Hat 4" value="/inst?id=/drums/OpenHats/Open Hat 4.wav">4</td>
+                                <td class="cellOfMisery" title="Open Hat 4"
+                                    value="/inst?id=/drums/OpenHats/Open Hat 4.wav">4</td>
                                 <td class="cellOfMisery" title="Perc 4" value="/inst?id=/drums/Percs/Perc 4.wav">4</td>
-                                <td class="cellOfMisery" title="Snare 4" value="/inst?id=/drums/Snares/Snare 4.wav">4</td>
+                                <td class="cellOfMisery" title="Snare 4" value="/inst?id=/drums/Snares/Snare 4.wav">4
+                                </td>
                             </tr>
                             <tr>
-                                <td class="cellOfMisery" title="808 5 (D)" value="/inst?id=/drums/808s/808 5 (D).wav">5 (D)</td>
+                                <td class="cellOfMisery" title="808 5 (D)" value="/inst?id=/drums/808s/808 5 (D).wav">5
+                                    (D)</td>
                                 <td class="cellOfMisery" title="Bass 5" value="/inst?id=/drums/Bass/Bass 5.wav">5</td>
-                                <td class="cellOfMisery" title="Chant 5" value="/inst?id=/drums/Chants/Chant 5.wav">5</td>
+                                <td class="cellOfMisery" title="Chant 5" value="/inst?id=/drums/Chants/Chant 5.wav">5
+                                </td>
                                 <td class="cellOfMisery" title="Clap 5" value="/inst?id=/drums/Claps/Clap 5.wav">5</td>
-                                <td class="cellOfMisery" title="Cymbal 5" value="/inst?id=/drums/Cymbals/Crash 1.wav">5</td>
+                                <td class="cellOfMisery" title="Cymbal 5" value="/inst?id=/drums/Cymbals/Crash 1.wav">5
+                                </td>
                                 <td class="cellOfMisery" title="FX 5" value="/inst?id=/drums/FX/FX 5.wav">5</td>
                                 <td class="cellOfMisery" title="Hat 5" value="/inst?id=/drums/Hats/Hat 5.wav">5</td>
                                 <td class="cellOfMisery" title="Kick 5" value="/inst?id=/drums/Kick/Kick 5.wav">5</td>
-                                <td class="cellOfMisery" title="Open Hat 5" value="/inst?id=/drums/OpenHats/Open Hat 5.wav">5</td>
+                                <td class="cellOfMisery" title="Open Hat 5"
+                                    value="/inst?id=/drums/OpenHats/Open Hat 5.wav">5</td>
                                 <td class="cellOfMisery" title="Perc 5" value="/inst?id=/drums/Percs/Perc 5.wav">5</td>
-                                <td class="cellOfMisery" title="Snare 5" value="/inst?id=/drums/Snares/Snare 5.wav">5</td>
+                                <td class="cellOfMisery" title="Snare 5" value="/inst?id=/drums/Snares/Snare 5.wav">5
+                                </td>
                             </tr>
                             <tr>
-                                <td class="cellOfMisery" title="808 6 (G#)" value="/inst?id=/drums/808s/808 6 (GS).wav">6 (G#)</td>
+                                <td class="cellOfMisery" title="808 6 (G#)" value="/inst?id=/drums/808s/808 6 (GS).wav">
+                                    6 (G#)</td>
                                 <td class="cellOfMisery" title="Bass 6" value="/inst?id=/drums/Bass/Bass 6.wav">6</td>
-                                <td class="cellOfMisery" title="Chant 6" value="/inst?id=/drums/Chants/Chant 6.wav">6</td>
+                                <td class="cellOfMisery" title="Chant 6" value="/inst?id=/drums/Chants/Chant 6.wav">6
+                                </td>
                                 <td class="cellOfMisery" title="Clap 6" value="/inst?id=/drums/Claps/Clap 6.wav">6</td>
                                 <td class="cellOfMisery" title="Ride" value="/inst?id=/drums/Cymbals/Ride.wav">6</td>
                                 <td class="cellOfMisery" title="FX 6" value="/inst?id=/drums/FX/FX 6.wav">6</td>
                                 <td class="cellOfMisery" title="Hat 6" value="/inst?id=/drums/Hats/Hat 6.wav">6</td>
                                 <td class="cellOfMisery" title="Kick 6" value="/inst?id=/drums/Kick/Kick 6.wav">6</td>
-                                <td class="cellOfMisery" title="Open Hat 6" value="/inst?id=/drums/OpenHats/Open Hat 6.wav">6</td>
+                                <td class="cellOfMisery" title="Open Hat 6"
+                                    value="/inst?id=/drums/OpenHats/Open Hat 6.wav">6</td>
                                 <td class="cellOfMisery" title="Perc 6" value="/inst?id=/drums/Percs/Perc 6.wav">6</td>
-                                <td class="cellOfMisery" title="Snare 6" value="/inst?id=/drums/Snares/Snare 6.wav">6</td>
+                                <td class="cellOfMisery" title="Snare 6" value="/inst?id=/drums/Snares/Snare 6.wav">6
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -217,15 +266,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="addInstrumentFinal" data-dismiss="modal">Add Instrument</button>
+                <button type="button" class="btn btn-primary" id="addInstrumentFinal" data-dismiss="modal">Add
+                    Instrument</button>
             </div>
         </div>
     </div>
 </div>
-
-
-<link rel="stylesheet" href="/style/piano.css">
-<script src="/js/piano.js"></script>
 
 <link rel="stylesheet" href="/style/index.css">
 <script src="/js/index.js"></script>

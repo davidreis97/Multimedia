@@ -12,35 +12,169 @@ const deleteLastInstrument = document.getElementById("deleteLastInstrument");
 const clearGridElem = document.getElementById("clearGridElem");
 const toggleMIDIInput = document.getElementById("toggleMIDIInput");
 const MIDIInputSelect = document.getElementById("MIDIInputSelect");
-const waveDiv = document.getElementById("wave");
+// const waveDiv = document.getElementById("wave");
 const polyphonic = document.getElementById("polyphonic");
+const afterCanvas = document.getElementById("afterCanvas");
 
 //MAIN - Runs at start of page
 
-// function setup() {
-//     createCanvas(window.innerWidth, 300);
-// }
+/*
+---------------------
+    WAVE DRAWING
+---------------------
+*/
 
-// let angle = 0;
-// let freq = 40;
-// let waveSpeed = 0.4;
+let lerpRate = 0.15; //Percentage of value to change
+let lerpSpeed = 10; //ms
+let lerpTolerance = 0.01;
 
-// function draw() {
-//     clear();
-//     let inc = freq / window.innerWidth;
-//     let oldAngle = angle;
-//     for (let i = 0; i < window.innerWidth; i++) {
-//         line(i, 150, i, 150 + sin(angle) * 150.0);
-//         angle = angle + inc;
-//     }
+class MyWave {
+    constructor(freq,amplitude,speed, angle = 0) {
+        this.freq = freq;
+        this.amplitude = amplitude;
+        this.speed = speed;
+        this.angle = angle;
+        this.oldAngle = angle;
+
+        this.nextFreq = freq;
+        this.nextAmplitude = amplitude;
+        this.nextSpeed = speed;
+
+        window.setInterval(()=>{this.checkChanges(this)},lerpSpeed);
+    }
+
+    setFreq(newFreq){
+        this.nextFreq = newFreq;
+    }
+
+    setAmplitude(newAmp){
+        this.nextAmplitude = newAmp;
+    }
+
+    setSpeed(newSpeed){
+        this.nextSpeed = newSpeed;
+    }
+
+    checkChanges(obj){
+        obj.interpolate(obj.freq, obj.nextFreq, (val)=>{obj.freq = val;});
+        obj.interpolate(obj.amplitude, obj.nextAmplitude, (val)=>{obj.amplitude = val;});
+        obj.interpolate(obj.speed, obj.nextSpeed, (val)=>{obj.speed = val;});
+    }
+
+    interpolate(initialValue, finalValue, callback){
+        if(initialValue == finalValue){
+            return;
+        }
+
+        if (abs(initialValue-finalValue) <= lerpTolerance){
+            initialValue = finalValue;
+            callback(initialValue);
+            return;
+        }
+
+        initialValue = lerp(initialValue,finalValue,lerpRate);
+
+        callback(initialValue);
+    }
+}
+
+function getActiveWaves(){
+    activeWaves = [];
+
+    for(wave of waves){
+        if(wave.amplitude > 0 && wave.freq > 0){
+            activeWaves.push(wave);
+        }
+    }
+
+    return activeWaves;
+}
+
+let waves = [
+    //new MyWave(30,0.15,1),
+    new MyWave(40,0.6,-0.4),
+   new MyWave(23,0.2,0.2),
+    new MyWave(09,0.43,-0.6),
+    //new MyWave(72,0.98,1.9),
+   // new MyWave(13,0.6,0),
+    new MyWave(34,0.34,-0.3),
+    //new MyWave(19,0.16,1.2),
+    //new MyWave(5,0.78,0.3),
+]
+
+let angle = 0;
+let maxAmplitude = 80.0;
+let accuracy = 6; //The higher, the worse
+let frameRateValue = 50;
+
+let upColor = {
+    r: 43,
+    g: 62,
+    b: 80
+}
+
+let downColor = {
+    r: 180,
+    g: 230,
+    b: 100
+}
+
+function setup() {
+    let canvas = createCanvas(window.innerWidth, 2*maxAmplitude);
+    frameRate(frameRateValue);
+    canvas.parent('wave');
+    strokeWeight(accuracy);
+    noSmooth();
+    strokeCap(SQUARE);
+}
+
+afterCanvas.style.background = "rgb(" + downColor.r + "," + downColor.g + "," + downColor.b + ")";
+afterCanvas.style.marginTop = -maxAmplitude + "px";
+
+function draw() {
+    clear();
+    let inc = accuracy / window.innerWidth;
     
-//     angle = oldAngle;
-//     angle += waveSpeed;
+    for(let wave of waves){
+        wave.oldAngle = wave.angle;
+    }
 
-//     if(angle >= TWO_PI){
-//         angle = 0;
-//     }
-// }
+    for (let i = 0; i <= window.innerWidth; i+=accuracy) {
+        let height = 0;
+        let nonZeroWaves = 0;
+
+        for(let wave of waves){
+            if(wave.amplitude > 0){
+                nonZeroWaves += wave.amplitude;
+                height += sin(wave.freq * wave.angle) * (wave.amplitude * maxAmplitude);
+            }
+
+            wave.angle += inc;
+        }
+
+        height /= nonZeroWaves;
+
+        height += maxAmplitude;
+
+        if(height <= maxAmplitude){
+            stroke(downColor.r,downColor.g,downColor.b);
+            line(i,height,i,maxAmplitude);
+        }else if(height > maxAmplitude){
+            stroke(upColor.r,upColor.g,upColor.b);
+            line(i,height,i,maxAmplitude);
+        }
+    }
+    
+    for(let wave of waves){
+        if (wave.amplitude > 0){
+            wave.angle = wave.oldAngle;
+            wave.angle += -wave.speed / 100 * 60 / frameRateValue;
+            if (wave.angle >= TWO_PI){
+                wave.angle = 0;
+            }
+        }
+    }
+}
 
 //Enable tooltips (cenas que mostram volume quando passas la com o rato)
 $(function () {
@@ -108,6 +242,12 @@ clearGridElem.onclick = (evt) => {
 }
 
 addEventListenersToTableOfMisery();
+
+/*
+-----------------------
+    MIDI CONTROLLER
+-----------------------
+*/
 
 toggleMIDIInput.onclick = enableMIDI;
 
