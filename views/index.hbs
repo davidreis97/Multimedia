@@ -61,18 +61,8 @@
         </div>
     </div>
 
-    <div style="display: flex;align-items:center;width:100%;flex-direction:row-reverse;margin-top:-3em">
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-        <span for="qualityPresets" style="padding-right: 1em">Wave Size</span>
-        <select class="custom-select" id="qualityPresets" style="width: 10em">
-            <option value="5">Highest</option>
-            <option value="4">High</option>
-            <option selected value="3">Medium</option>
-            <option value="2">Low</option>
-            <option value="1">Very Low</option>
-            <option value="0">Off</option>
-        </select>
-        <span for="qualityPresets" style="padding-right: 1em">Wave Render Quality</span>
+    <div style="display: flex;width:100%;flex-direction:row-reverse;margin-top:-3em">
+        <button data-toggle="modal" data-target="#configureWave" class="btn btn-primary">Wave Settings</button>
     </div>
 </div>
 
@@ -103,6 +93,43 @@
                     </select>
                     <input type="checkbox" id="polyphonic">
                     <label for="polyphonic">Polyphonic</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="configureWave" tabindex="-1" role="dialog" aria-labelledby="configureWaveTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="configureWaveTitle">Configure Wave</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="display:flex; justify-content:space-between;margin-bottom:1em;align-items:center">
+                    <span for="qualityPresets">Wave Speed</span>
+                    <input type="range" min="0.01" max="3" value="1" step="0.01" class="slider" id="waveSpeed">
+                </div>
+                <div style="display:flex; justify-content:space-between;margin-bottom:1em;align-items:center">
+                    <span for="qualityPresets">Wave Size</span>
+                    <input type="range" min="0.01" max="5" value="1" step="0.02" class="slider" id="waveSize">
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center">
+                    <span for="qualityPresets">Wave Render Quality</span>
+                        <select class="custom-select" id="qualityPresets" style="width:10em">
+                            <option value="5">Highest</option>
+                            <option value="4">High</option>
+                            <option selected value="3">Medium</option>
+                            <option value="2">Low</option>
+                            <option value="1">Very Low</option>
+                        </select>
                 </div>
             </div>
             <div class="modal-footer">

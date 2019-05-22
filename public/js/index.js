@@ -12,11 +12,14 @@ const deleteLastInstrument = document.getElementById("deleteLastInstrument");
 const clearGridElem = document.getElementById("clearGridElem");
 const controls = document.getElementById("controls");
 const collapseGridButton = document.getElementById("collapseGridButton");
+const waveSpeedInput = document.getElementById("waveSpeed");
+const waveSizeInput = document.getElementById("waveSize");
 const toggleMIDIInput = document.getElementById("toggleMIDIInput");
 const MIDIInputSelect = document.getElementById("MIDIInputSelect");
 // const waveDiv = document.getElementById("wave");
 const polyphonic = document.getElementById("polyphonic");
 const afterCanvas = document.getElementById("afterCanvas");
+const qualityPresets = document.getElementById("qualityPresets");
 
 //MAIN - Runs at start of page
 
@@ -105,7 +108,8 @@ let waves = [
 ]
 
 let angle = 0;
-let maxAmplitude = 80.0;
+const defaultAmplitude = 80.0;
+let maxAmplitude = defaultAmplitude;
 let accuracy = 6; //The higher, the worse
 let frameRateValue = 50;
 
@@ -166,11 +170,11 @@ function draw() {
             line(i,height,i,maxAmplitude);
         }
     }
-    
+
     for(let wave of waves){
         if (wave.amplitude > 0){
             wave.angle = wave.oldAngle;
-            wave.angle += -wave.speed / 100 * 60 / frameRateValue;
+            wave.angle += -wave.speed * waveSpeedInput.value / 100 * 60 / frameRateValue;
             if (wave.angle >= TWO_PI){
                 wave.angle = 0;
             }
@@ -241,6 +245,52 @@ deleteLastInstrument.onclick = (evt) => {
 
 clearGridElem.onclick = (evt) => {
     clearGrid();
+}
+
+waveSizeInput.oninput = () => {
+    maxAmplitude = waveSizeInput.value * defaultAmplitude;
+    resizeCanvas(window.innerWidth, 2*maxAmplitude);
+    afterCanvas.style.marginTop = -maxAmplitude + "px";
+}
+
+qualityPresets.oninput = () => {
+    switch(qualityPresets.value){
+        case "1": 
+            {
+                console.log("Here");
+                frameRateValue = 30;
+                accuracy = 7;
+                break;
+            }
+        case "2":
+            {
+                frameRateValue = 50;
+                accuracy = 5;
+                break;
+            }
+        case "3":
+            {
+                frameRateValue = 55;
+                accuracy = 4;
+                break;
+            }
+        case "4":
+            {
+                frameRateValue = 60;
+                accuracy = 3;
+                break;
+            }
+        case "5":
+            {
+                console.log("Here");
+                frameRateValue = 70;
+                accuracy = 1;
+                break;
+            }
+    }
+
+    strokeWeight(accuracy);
+    frameRate(frameRateValue);
 }
 
 let collapsed = false;
