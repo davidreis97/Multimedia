@@ -10,8 +10,37 @@ const newInstURL = document.getElementById("newInstURL");
 const formatSelect = document.getElementById("formatSelect");
 const deleteLastInstrument = document.getElementById("deleteLastInstrument");
 const clearGridElem = document.getElementById("clearGridElem");
+const toggleMIDIInput = document.getElementById("toggleMIDIInput");
+const MIDIInputSelect = document.getElementById("MIDIInputSelect");
+const waveDiv = document.getElementById("wave");
+const polyphonic = document.getElementById("polyphonic");
 
 //MAIN - Runs at start of page
+
+// function setup() {
+//     createCanvas(window.innerWidth, 300);
+// }
+
+// let angle = 0;
+// let freq = 40;
+// let waveSpeed = 0.4;
+
+// function draw() {
+//     clear();
+//     let inc = freq / window.innerWidth;
+//     let oldAngle = angle;
+//     for (let i = 0; i < window.innerWidth; i++) {
+//         line(i, 150, i, 150 + sin(angle) * 150.0);
+//         angle = angle + inc;
+//     }
+    
+//     angle = oldAngle;
+//     angle += waveSpeed;
+
+//     if(angle >= TWO_PI){
+//         angle = 0;
+//     }
+// }
 
 //Enable tooltips (cenas que mostram volume quando passas la com o rato)
 $(function () {
@@ -33,6 +62,7 @@ let currentBeat = 0;
 let playing;
 let maxBeats = 16;
 let beatsPerMinute = 500;
+let midiEnabled = false;
 
 createNewLine('Snare 1', '/inst?id=/drums/Snares/Snare 1.wav', "wav");
 createNewLine('Perc 8', '/inst?id=/drums/Percs/Perc 8.wav', "wav");
@@ -66,7 +96,7 @@ lesscolumns.onclick = (evt) => {
 }
 
 addInstrumentFinal.onclick = (evt) => {
-    createNewLine(newInstTitle.value,newInstURL.value,formatSelect.value);
+    createNewLine(newInstTitle.value, newInstURL.value, formatSelect.value);
 }
 
 deleteLastInstrument.onclick = (evt) => {
@@ -79,23 +109,100 @@ clearGridElem.onclick = (evt) => {
 
 addEventListenersToTableOfMisery();
 
+toggleMIDIInput.onclick = enableMIDI;
+
+let synth = new Tone.Synth().toMaster();
+
+let currentNote = "";
+
+polyphonic.oninput = (evt) => {
+    if(polyphonic.checked === true){
+        synth.dispose();
+        synth = new Tone.PolySynth(8).toMaster();
+    }else if(polyphonic.checked === false){
+        synth.dispose();
+        synth = new Tone.Synth().toMaster();
+    }
+}
+
+MIDIInputSelect.oninput = (evt) => {
+    if(MIDIInputSelect.value != 0){
+        let midiInput = WebMidi.getInputById(MIDIInputSelect.value);
+
+        if (midiInput){
+            midiInput.addListener("noteon","all",(evt) => {
+                currentNote = evt.note.name + "" + evt.note.octave;
+                if(polyphonic.checked){
+                    synth.triggerAttack(currentNote);
+                }else{
+                    synth.triggerAttack(currentNote,null,evt.note.velocity);
+                }
+            });
+
+            midiInput.addListener("noteoff","all",(evt) => {
+                if(polyphonic.checked){
+                    synth.triggerRelease(evt.note.name + "" + evt.note.octave); //Polyphonic
+                }else{
+                    if (evt.note.name + "" + evt.note.octave == currentNote){
+                        synth.triggerRelease(); //Monophonic
+                    }
+                }                
+            });
+
+            console.log("Successfully listening to midi input with id [" + MIDIInputSelect.value +"]");
+        }else{
+            console.log("Could not get midi input with id [" + MIDIInputSelect.value + "]");
+        }
+    }
+}
 //FUNCTIONS
 
-function addEventListenersToTableOfMisery(){
+function enableMIDI() {
+    WebMidi.enable(function (err) {
+        if (err) {
+            console.log("WebMidi could not be enabled.", err);
+        } else {
+            $('#midiForm').collapse('show');
+            toggleMIDIInput.innerText = "Disable MIDI Input";
+            toggleMIDIInput.classList.replace("btn-success", "btn-danger");
+            toggleMIDIInput.onclick = disableMIDI;
+            midiEnabled = true;
+
+            for (let input of WebMidi.inputs) {
+                let option = document.createElement("option");
+                option.innerText = "Name: " + input.name + " / Manufacturer: " + input.manufacturer;
+                option.value = input.id;
+
+                MIDIInputSelect.appendChild(option);
+            }
+        }
+    });
+}
+
+function disableMIDI() {
+    WebMidi.disable();
+    $('#midiForm').collapse('hide');
+    toggleMIDIInput.innerText = "Enable MIDI Input";
+    toggleMIDIInput.classList.replace("btn-danger", "btn-success");
+    toggleMIDIInput.onclick = enableMIDI;
+    midiEnabled = false;
+}
+
+function addEventListenersToTableOfMisery() {
     let tableOfMisery = document.getElementById("tableOfMisery");
-    for(let tr of tableOfMisery.children){
-        for(let td of tr.children){
+    for (let tr of tableOfMisery.children) {
+        for (let td of tr.children) {
             td.onclick = (evt) => {
                 newInstTitle.value = td.getAttribute("title");
                 newInstURL.value = td.getAttribute("value");
                 formatSelect.value = "wav"; //All sounds in our library are wav.
-                getInstrumentFromServer(newInstURL.value,true,formatSelect.value);
+                getInstrumentFromServer(newInstURL.value, true, formatSelect.value);
             }
         }
     }
 }
 
-function makeKeyboardToggle(){
+function makeKeyboardToggle() {
     document.onkeydown = (evt) => {
         if (evt.key == " ") {
             togglePlaying();
@@ -134,7 +241,7 @@ function updatecolumnNum() {
     columnnumb.innerText = "" + grid[0].length + " columns";
 }
 
-function deleteLastLine(){
+function deleteLastLine() {
     let lastLine = document.getElementById("music-" + (grid.length - 1));
     lastLine.parentNode.removeChild(lastLine);
     grid.pop();
@@ -259,6 +366,13 @@ function initialBox(instName, lineNum) {
     return td;
 }
 
+
+function setPanningUnavailable(lineNum) {
+    let panInput = document.getElementById("panInput-" + lineNum);
+    panInput.setAttribute('disabled', "true");
+    $("#panInput-" + lineNum).attr('data-original-title', 'ASDASDS').tooltip('update');
+}
+
 function setPan(panInput, lineNum) {
     sounds[soundName[lineNum]].stereo(Number(panInput.value));
 }
@@ -268,10 +382,16 @@ function setVolume(volumeInput, lineNum) {
 }
 
 function createNewLine(title, instName, format) {
+    let line = grid.length.valueOf();
     getInstrumentFromServer(instName, false, format);
 
+    sounds[instName].on('load', () => {
+        if (sounds[instName]._html5) {
+            setPanningUnavailable(line); //Panning is unavailable in howler.js for html5 audio.
+        }
+    });
+
     let tr = document.createElement("tr");
-    let line = grid.length.valueOf();
     tr.id = "music-" + line;
     let gridLine = new Array(maxBeats);
 
@@ -301,11 +421,11 @@ function unhighlightcolumn(column) {
     }
 }
 
-function clearGrid(){
-    for(let line = 0; line < grid.length; line++){
-        for(let column = 0; column < grid[line].length; column++){            
-            if(grid[line][column]){
-                toggleSquare(line,column);
+function clearGrid() {
+    for (let line = 0; line < grid.length; line++) {
+        for (let column = 0; column < grid[line].length; column++) {
+            if (grid[line][column]) {
+                toggleSquare(line, column);
             }
         }
     }
@@ -354,7 +474,7 @@ function mainLoop() {
 }
 
 function getInstrumentFromServer(url, autoplay = false, format = "wav") {
-    if(sounds[url] == null || sounds[url].format != format) {
+    if (sounds[url] == null || sounds[url].format != format) {
         sounds[url] = new Howl({
             src: url,
             autoplay: autoplay,
@@ -362,9 +482,11 @@ function getInstrumentFromServer(url, autoplay = false, format = "wav") {
             volume: 0.5,
             format: format,
         });
-    }else{
-        if (autoplay){
+    } else {
+        if (autoplay) {
             sounds[url].play();
         }
     }
 }
+
+//Synth Presets
