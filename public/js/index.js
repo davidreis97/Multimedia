@@ -10,6 +10,8 @@ const newInstURL = document.getElementById("newInstURL");
 const formatSelect = document.getElementById("formatSelect");
 const deleteLastInstrument = document.getElementById("deleteLastInstrument");
 const clearGridElem = document.getElementById("clearGridElem");
+const controls = document.getElementById("controls");
+const collapseGridButton = document.getElementById("collapseGridButton");
 const toggleMIDIInput = document.getElementById("toggleMIDIInput");
 const MIDIInputSelect = document.getElementById("MIDIInputSelect");
 // const waveDiv = document.getElementById("wave");
@@ -239,6 +241,22 @@ deleteLastInstrument.onclick = (evt) => {
 
 clearGridElem.onclick = (evt) => {
     clearGrid();
+}
+
+let collapsed = false;
+collapseGridButton.onclick = () => {
+    if(collapsed == true){
+        collapseGridButton.innerHTML = '<span class="oi oi-arrow-thick-top"></span> Collapse';
+        $('#collapsibleGrid').collapse('show');
+        controls.style.borderBottomLeftRadius = "0px";
+        controls.style.borderBottomRightRadius = "0px";
+    }else{
+        collapseGridButton.innerHTML = '<span class="oi oi-arrow-thick-bottom"></span> Expand';
+        $('#collapsibleGrid').collapse('hide');
+        controls.style.borderBottomLeftRadius = "10px";
+        controls.style.borderBottomRightRadius = "10px";
+    }
+    collapsed = !collapsed;
 }
 
 addEventListenersToTableOfMisery();

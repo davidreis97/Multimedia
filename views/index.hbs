@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="controls">
+    <div class="controls" id="controls">
         <div class="playpause play" id="playpause">
             <input type="checkbox" value="None" id="playpause" name="check" />
             <label for="playpause"></label>
@@ -26,33 +26,44 @@
             <span class="oi oi-trash"></span>
             Clear Grid
         </button>
-    </div>
-    <div style="text-align: center">
-        <div id="music-grid-container" class="table-container">
-            <table class="table table-bordered" style="width:1px;margin:auto">
-                <tbody id="music-grid">
-                    <!-- Filled automatically with javascript in index.js -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="newInstrumentContainer">
-        <button data-toggle="modal" data-target="#newInstrumentModal" type="button" class="btn btn-primary">
-            <strong>+</strong> New Instrument
-        </button>
-        <button id="deleteLastInstrument" type="button" style="margin-left: 0.5em" class="btn btn-danger">
-            <span class="oi oi-trash"></span>
-            Delete Last Instrument
-        </button>
-        <button data-toggle="modal" data-target="#configureMIDIInputs" style="margin-left: 0.5em" type="button"
-            class="btn btn-warning">
-            <span class="oi oi-musical-note"></span>
-            Configure MIDI Input
+
+        <div class="separator"></div>
+
+        <button id="collapseGridButton" type="button" class="btn btn-warning btn-sm">
+            <span class="oi oi-arrow-thick-top"></span>
+            Collapse
         </button>
     </div>
 
-    <div style="display: flex;">
-        <span for="qualityPresets">Wave Render Quality</span>
+    <div id="collapsibleGrid" class="collapse show">
+        <div style="text-align: center">
+            <div id="music-grid-container" class="table-container">
+                <table class="table table-bordered" style="width:1px;margin:auto">
+                    <tbody id="music-grid">
+                        <!-- Filled automatically with javascript in index.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="newInstrumentContainer">
+            <button data-toggle="modal" data-target="#newInstrumentModal" type="button" class="btn btn-primary">
+                <strong>+</strong> New Instrument
+            </button>
+            <button id="deleteLastInstrument" type="button" style="margin-left: 0.5em" class="btn btn-danger">
+                <span class="oi oi-trash"></span>
+                Delete Last Instrument
+            </button>
+            <button data-toggle="modal" data-target="#configureMIDIInputs" style="margin-left: 0.5em" type="button"
+                class="btn btn-warning">
+                <span class="oi oi-musical-note"></span>
+                Configure MIDI Input
+            </button>
+        </div>
+    </div>
+
+    <div style="display: flex;align-items:center;width:100%;flex-direction:row-reverse;margin-top:-3em">
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <span for="qualityPresets" style="padding-right: 1em">Wave Size</span>
         <select class="custom-select" id="qualityPresets" style="width: 10em">
             <option value="5">Highest</option>
             <option value="4">High</option>
@@ -61,6 +72,7 @@
             <option value="1">Very Low</option>
             <option value="0">Off</option>
         </select>
+        <span for="qualityPresets" style="padding-right: 1em">Wave Render Quality</span>
     </div>
 </div>
 
