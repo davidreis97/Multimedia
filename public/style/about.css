@@ -1,0 +1,92 @@
+header {
+    background-color: black; /* cor que aparece se a pagina ainda estiver a ser carregada para dar a ideia do layout */
+    background-image: url("../images/about.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 42%;
+}
+
+.navbar {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.centered {
+    font-size: 45px;
+    position: absolute;
+    top: 23%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.description {
+    padding: 30px;
+    padding-bottom: 0;
+    text-align: center;
+}
+
+.team-members figure {
+    margin: auto;
+    text-align: center;
+    width: 200px;
+}
+
+.team-members figure img {
+    /* border: 1px solid; */
+    border-radius: 50%;
+    box-shadow: gray 0 0 10px;
+    width: 150px;
+}
+
+figcaption {
+    padding-top: 10px;
+}
+
+/* responsive rules */
+/*@media screen and (min-width: 320px){
+    .team {
+        display: block;
+    }
+}*/
+
+/*div .team-members {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+}*/
+
+.team-members {
+    padding-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    max-width: 60%;
+    margin: auto;
+}
+
+.pres {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.pres2 {
+    margin-top: -10px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.contacts {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+
+
+
+
+
+
+
+
