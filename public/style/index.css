@@ -2,6 +2,13 @@ body{
     overflow: hidden;
 }
 
+.inlineForm {
+    display:flex; 
+    justify-content:space-between;
+    margin-bottom:1em;
+    align-items:center;
+}
+
 .square{
     height: 50px;
     width: 50px;
@@ -22,6 +29,7 @@ body{
 
 #music-grid-container {
     overflow:scroll;
+    max-height: 50%;
 }
 
 #music-grid {

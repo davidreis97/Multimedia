@@ -3,7 +3,6 @@ let router = new express.Router();
 fileSystem = require('fs'),
 path = require('path');
 
-
 router.get('/', function(req, res, next) {
     res.render('index');
 });
