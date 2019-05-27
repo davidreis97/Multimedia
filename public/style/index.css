@@ -9,6 +9,12 @@ body{
     align-items:center;
 }
 
+.navbar {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .square{
     height: 50px;
     width: 50px;

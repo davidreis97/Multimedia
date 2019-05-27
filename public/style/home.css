@@ -1,0 +1,74 @@
+header {
+    background-color: black; /* cor que aparece se a pagina ainda estiver a ser carregada para dar a ideia do layout */
+    background-image: url("../images/headphones.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 58%;
+}
+
+.centered {
+    font-size: 60px;
+    text-shadow: 1px 1px 1px #000;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.container {
+    /*position: relative;*/
+    width: 100%;
+    max-width: 400px;
+}
+
+.container .btn {
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #ED3758;
+    color: white;
+    font-size: 50px;
+    padding: 15px 60px; /* top and bottom paddings - right and left paddings */
+    border: none;
+    cursor: pointer;
+    border-radius: 500px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/*.container .btn:hover {
+
+}*/
+
+ p {
+     text-align: center;
+}
+
+#white-circle {
+    /*border: 4px solid #00C957;*/
+    border-radius: 100px;
+    height: 120px;
+    width: 120px;
+    background-color: white;
+}
+
+.instruments {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 42%;
+    align-items: center; 
+    padding: 90px;
+}
+
+.navbar {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
