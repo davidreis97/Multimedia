@@ -9,12 +9,12 @@ header {
 
 .navbar {
     padding: 20px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
 }
 
 .centered {
-    font-size: 45px;
+    font-size: 80px;
     position: absolute;
     top: 23%;
     left: 50%;

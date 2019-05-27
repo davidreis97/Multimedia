@@ -7,8 +7,14 @@ header {
     height: 58%;
 }
 
+.navbar {
+    padding: 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 .centered {
-    font-size: 60px;
+    font-size: 90px;
     text-shadow: 1px 1px 1px #000;
     position: absolute;
     top: 30%;
@@ -29,20 +35,50 @@ header {
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
-    background-color: #ED3758;
+    /*background-color: #ED3758;*/
+    /*background-color: rgb(180, 230, 100);*/
+    /*background-color: #d9534f;*/
+    background-color: #d9534f;
+    /*color: #4e5d6c;*/
     color: white;
-    font-size: 50px;
+    font-size: 65px;
     padding: 15px 60px; /* top and bottom paddings - right and left paddings */
     border: none;
     cursor: pointer;
     border-radius: 500px;
     text-align: center;
     text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.5s;
 }
 
-/*.container .btn:hover {
+.container .btn span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
 
-}*/
+.container .btn span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: -8.5px;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.container .btn:hover span {
+    padding-right: 60px;
+}
+
+.container .btn:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+
+
 
  p {
      text-align: center;
@@ -64,11 +100,5 @@ header {
     height: 42%;
     align-items: center; 
     padding: 90px;
-}
-
-.navbar {
-    padding: 20px;
-    font-size: 20px;
-    font-weight: bold;
 }
 
