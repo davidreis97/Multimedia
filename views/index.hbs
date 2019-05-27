@@ -12,7 +12,7 @@
                 <a class="nav-link" data-toggle="modal" data-target="#exporting" href="#">Exporting</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="tutorial">Tutorial</a>
+                <a class="nav-link" data-toggle="modal" data-target="#tutorial" href="#">Tutorial</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="about">About Us</a>
@@ -181,7 +181,7 @@
                         </select>
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span for="maxWaves">Maximum Pure Waves</span>
+                    <span for="maxWaves">Maximum Sine Waves</span>
                     <input type="number" class="form-control" min="1" max="10" value="4" id="maxWaves" style="width:10em;" onkeydown="return false"/>
                 </div>
             </div>
@@ -363,6 +363,38 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="tutorial">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tutorial</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2><a id="Music_Grid_0"></a>Music Grid</h2>
+        <p>To get started, start by placing a few beats on the grid, by clicking on a few empty squares. Each grid line corresponds to an instrument, and each column corresponds to a beat. Once you press play, the website will start looping over the grid, playing the sounds as you placed them across the grid.</p>
+        <h2><a id="Adding_a_new_Instrument_4"></a>Adding a new Instrument</h2>
+        <p>Press the “+ New Instrument” button in the button bar below the grid. A modal will pop up, where you can provide the details of the instrument you wish to add to the grid.</p>
+        <p>We offer you a small library of instruments from which you can choose. By pressing “Toggle Library” you will be able to see all the instruments that we offer on a table. You can choose one of those instruments, or link your own audio files from anywhere on the Internet.</p>
+        <h2><a id="Configuring_MIDI_Input_10"></a>Configuring MIDI Input</h2>
+        <ol>
+        <li>Make sure that your MIDI Input device is connected to your computer.</li>
+        <li>Press the “Configure MIDI Input” button on the button bar below the music grid and &quot;Enable MIDI Input&quot;.</li>
+        <li>Choose from the dropdown list the input device that you wish to use on the website.</li>
+        <li>On the checkbox below, choose between a polyphonic and a monophonic synth.</li>
+        </ol>
+        <h2><a id="Wave_17"></a>Wave</h2>
+        <p>If you press the “Wave Settings” button bellow the grid, at the right of the screen, you’ll see a pop up where you can change the wave speed, size, render quality and maximum sine waves.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <link rel="stylesheet" href="/style/index.css">
