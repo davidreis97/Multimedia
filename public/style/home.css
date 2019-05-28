@@ -9,8 +9,19 @@ header {
 
 .navbar {
     padding: 20px;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
+}
+
+a.logo {
+    text-decoration: none;
+    font-size: 30px;
+    color: #d9534f;
+    font-weight: 400;
+}
+
+a.logo span {
+    color: #b4e664;
 }
 
 .centered {
