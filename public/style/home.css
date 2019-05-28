@@ -25,8 +25,8 @@ a.logo span {
 }
 
 .centered {
-    font-size: 90px;
-    text-shadow: 1px 1px 1px #000;
+    font-size: 80px;
+    text-shadow: 2px 2px 2px #000;
     position: absolute;
     top: 30%;
     left: 50%;
