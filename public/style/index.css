@@ -50,7 +50,7 @@ a.logo span {
 }
 
 #music-grid {
-    background: #4e5d6c;
+    background: rgb(64, 93, 119);
 }
 
 .cellOfMisery{
@@ -59,10 +59,10 @@ a.logo span {
 }
 
 .table-container {
-    background:#abb6c2;
+    background:rgb(93, 136, 173);
     border-width: 3px;
     border-style: solid;
-    border-color: rgba(114, 119, 126, 0.8);
+    border-color: rgb(64, 93, 119);
     border-radius: 4px;
     background-clip: padding-box;
     display: inline-block;
@@ -107,11 +107,11 @@ a.logo span {
 
 .controls{
     display: inline-flex;
-    background:rgba(114, 119, 126, 0.8);
+    background:rgb(64, 93, 119);
     background-clip:  padding-box;
     border-width: 3px 3px 0px 3px;
     border-style: solid;
-    border-color: rgba(114, 119, 126, 0.8);
+    border-color: rgb(64, 93, 119);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     margin-left: 20px;
@@ -120,11 +120,11 @@ a.logo span {
 
 .newInstrumentContainer{
     display: inline-flex;
-    background:rgba(114, 119, 126, 0.8);
+    background:rgb(64, 93, 119);
     background-clip:  padding-box;
     border-width: 3px 3px 0px 3px;
     border-style: solid;
-    border-color: rgba(114, 119, 126, 0.8);
+    border-color: rgb(64, 93, 119);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     margin-left: 20px;
