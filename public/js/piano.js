@@ -264,7 +264,7 @@ function draw() {
 
 toggleMIDIInput.onclick = enableMIDI;
 
-let synth = new Tone.Synth().toMaster();
+let synth = new Tone.PolySynth(8).toMaster();
 
 let currentNote = "";
 
