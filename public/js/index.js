@@ -25,6 +25,14 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
+$('#configureMIDIInputs').on('hide.bs.modal', function (e) {
+    makeKeyboardToggle();
+});
+
+$('#configureMIDIInputs').on('show.bs.modal', function (e) {
+    document.onkeydown = null;
+})
+
 $('#newInstrumentModal').on('hide.bs.modal', function (e) {
     makeKeyboardToggle();
 })
