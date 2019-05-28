@@ -18,6 +18,8 @@ const qualityPresets = document.getElementById("qualityPresets");
 const speedMultiplier = document.getElementById("speedMultiplier");
 const sizeMultiplier = document.getElementById("sizeMultiplier");
 const maxWaves = document.getElementById("maxWaves");
+const synthSettings = document.getElementById("synthSettings");
+const synthVolume = document.getElementById("synthVolume");
 let midiEnabled = false;
 
 /*
@@ -255,26 +257,97 @@ function draw() {
     }
 }
 
-
 /*
 -----------------------
     MIDI CONTROLLER
 -----------------------
 */
 
+class CustomSynth extends Tone.MonoSynth{
+    constructor(){
+        super(config);
+    }
+}
+
 toggleMIDIInput.onclick = enableMIDI;
 
-let synth = new Tone.PolySynth(8).toMaster();
+let config = {
+    "oscillator": {
+        "type": "fmsquare5",
+		"modulationType" : "triangle",
+      	"modulationIndex" : 2,
+      	"harmonicity" : 0.501
+    },
+    "filter": {
+        "Q": 1,
+        "type": "lowpass",
+        "rolloff": -24
+    },
+    "envelope": {
+        "attack": 0.01,
+        "decay": 0.1,
+        "sustain": 0.4,
+        "release": 2
+    },
+    "filterEnvelope": {
+        "attack": 0.01,
+        "decay": 0.1,
+        "sustain": 0.8,
+        "release": 1.5,
+        "baseFrequency": 50,
+        "octaves": 4.4
+    }
+};
+
+synth = null;
+renewSynth();
+
+synthSettings.innerHTML = JSON.stringify(config,null, 4);
+
+synthSettings.onkeyup = () => {
+    try{
+        JSON.parse(synthSettings.value);
+        $('#invalidJSON').collapse('hide');
+    }catch(e){
+        $('#invalidJSON').collapse('show');
+    }
+};
+
+synthSettings.onchange = () => {
+    try{
+        config = JSON.parse(synthSettings.value);
+        synthSettings.innerHTML = synthSettings.value;
+        $('#invalidJSON').collapse('hide');
+
+        renewSynth();
+    }catch(e){
+        console.log("Invalid synth config");
+    }
+};
+
+synthVolume.oninput = () => {
+    synth.volume.value = synthVolume.value;
+    if(synthVolume.value == Number(synthVolume.getAttribute("min"))){
+        synth.volume.value = Number.NEGATIVE_INFINITY;
+    }
+}
+synthVolume.oninput();
 
 let currentNote = "";
 
 polyphonic.oninput = (evt) => {
+    renewSynth();
+}
+
+function renewSynth(){
+    if (synth) {
+        synth.dispose();
+    }
+
     if(polyphonic.checked === true){
-        synth.dispose();
-        synth = new Tone.PolySynth(8).toMaster();
+        synth = new Tone.PolySynth(8,CustomSynth).toMaster();
     }else if(polyphonic.checked === false){
-        synth.dispose();
-        synth = new Tone.Synth().toMaster();
+        synth = new Tone.MonoSynth(config).toMaster();
     }
 }
 
@@ -322,9 +395,7 @@ MIDIInputSelect.oninput = (evt) => {
                     waves[0].setAmplitude(evt.velocity);
                     waves[0].setSpeed((Math.random() * 2) - 1);
                     waves[0].note = currentNote;
-                }
-
-                
+                }                
             });
 
             midiInput.addListener("noteoff","all",(evt) => {
@@ -343,8 +414,10 @@ MIDIInputSelect.oninput = (evt) => {
                         waves[0].clearWave();
                     }
                 }
+            });
 
-                
+            midiInput.addListener("pitchbend","all",(evt) => {
+                console.log(evt);
             });
 
             console.log("Successfully listening to midi input with id [" + MIDIInputSelect.value +"]");
@@ -369,6 +442,7 @@ function enableMIDI() {
                 let option = document.createElement("option");
                 option.innerText = "Name: " + input.name + " / Manufacturer: " + input.manufacturer;
                 option.value = input.id;
+                option.classList.add("midi-option");
 
                 MIDIInputSelect.appendChild(option);
             }
@@ -383,4 +457,10 @@ function disableMIDI() {
     toggleMIDIInput.classList.replace("btn-danger", "btn-success");
     toggleMIDIInput.onclick = enableMIDI;
     midiEnabled = false;
+
+    let options = document.getElementsByClassName("midi-option");
+    let max = options.length;
+    for(let i = 0; i < max; i++){
+        options[0].parentNode.removeChild(options[0]);
+    }
 }
