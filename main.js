@@ -4,7 +4,11 @@ const routes = require('./routes/main');
 let path = require('path');
 
 const app = express();
-const port = 3000;
+var myArgs = process.argv.slice(2);
+
+if(myArgs.length == 0) return;
+
+const port = myArgs[0];
 
 const hbs = exphbs.create({
     extname: 'hbs',
@@ -13,6 +17,8 @@ const hbs = exphbs.create({
     partialsDir: __dirname + '/views/partials/',
     userDir: __dirname + '/views/user',
   });
+
+
 app.engine('hbs', hbs.engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
