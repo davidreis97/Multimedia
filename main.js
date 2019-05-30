@@ -4,11 +4,8 @@ const routes = require('./routes/main');
 let path = require('path');
 
 const app = express();
-var myArgs = process.argv.slice(2);
 
-if(myArgs.length == 0) return;
-
-const port = myArgs[0];
+const port = process.env.PORT || 3000;
 
 const hbs = exphbs.create({
     extname: 'hbs',
