@@ -1,0 +1,5 @@
+Num terminal, na pasta root do projeto (contém o ficheiro package.json):
+
+1º - Instalar dependências ($- npm install)
+2º - Executar projeto ($- node main.js)
+3º - No browser, aceder à página localhost:3000

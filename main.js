@@ -15,7 +15,6 @@ const hbs = exphbs.create({
     userDir: __dirname + '/views/user',
   });
 
-
 app.engine('hbs', hbs.engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
